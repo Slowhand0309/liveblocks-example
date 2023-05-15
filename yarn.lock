@@ -75,6 +75,27 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@liveblocks/client@1.0.9", "@liveblocks/client@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@liveblocks/client/-/client-1.0.9.tgz#0a434f3b608145ed3ae42847184ac26ae30ace1d"
+  integrity sha512-+Udcu4yeUNPN/WRJDLJqxbH7iVeeWWuSwXrzw6/XVPpkJcPJAFhZ6ZldtlIOV3/AIXyD2t2SlmcM+QRocfC7GA==
+  dependencies:
+    "@liveblocks/core" "1.0.9"
+
+"@liveblocks/core@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@liveblocks/core/-/core-1.0.9.tgz#eabbdb1a3a527d6dca2ea58111cf0cdc3dd025ba"
+  integrity sha512-Fvw8/2b/ByfaWSPKdLZ2LZvjfA99MUldOStnqrQO/adDCPSilfnFh5qASXEdFjN/jt0VW2MxJQW6dMtZaLp2cg==
+
+"@liveblocks/react@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@liveblocks/react/-/react-1.0.9.tgz#a3ec4d3037ede597accd253a74a51c84b9c3d3d2"
+  integrity sha512-fvPHCDFphWthYTunlvj/HPh2kBtiXTnCpln9FydTEQRLRTVDjwRibdmpw/n2pFtq6BaeFVC0rEobHKijTEJ76w==
+  dependencies:
+    "@liveblocks/client" "1.0.9"
+    "@liveblocks/core" "1.0.9"
+    use-sync-external-store "^1.2.0"
+
 "@next/env@13.4.1":
   version "13.4.1"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.1.tgz#57322da2630b6bb6d7204577b0a18f6f9324db0c"
@@ -2001,6 +2022,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-sync-external-store@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
