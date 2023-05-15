@@ -1,5 +1,9 @@
 'use client';
 
+import { LiveMap } from '@liveblocks/client';
+import { RoomProvider } from '../providers/liveblocks';
+import '../styles/globals.css';
+
 export default function RootLayout({
   children,
 }: {
@@ -9,8 +13,15 @@ export default function RootLayout({
     <html>
       <head></head>
       <body>
-        <div>layout header</div>
-        <div>{children}</div>
+        <RoomProvider
+          id="react-whiteboard-app"
+          initialPresence={{}}
+          initialStorage={{
+            shapes: new LiveMap(),
+          }}
+        >
+          <div>{children}</div>
+        </RoomProvider>
       </body>
     </html>
   );
