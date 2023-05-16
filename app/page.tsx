@@ -7,6 +7,7 @@ import {
   useMyPresence,
   useOthers,
   useRoom,
+  useUpdateMyPresence,
 } from '../providers/liveblocks';
 const COLORS = ['#DC2626', '#D97706', '#059669', '#7C3AED', '#DB2777'];
 
@@ -65,9 +66,22 @@ const Rectangle = ({
   );
 };
 
+const Cursor = ({ x, y }: { x: number; y: number }) => {
+  return (
+    <img
+      style={{
+        position: 'absolute',
+        transform: `translate(${x}px, ${y}px)`,
+      }}
+      src="https://liveblocks.io/images/cursor.svg"
+    />
+  );
+};
+
 const Canvas = ({ shapes }: { shapes: any }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [{ selectedShape }, setPresence] = useMyPresence();
+  const updateMyPresence = useUpdateMyPresence();
   const others = useOthers();
 
   const insertRectangle = () => {
@@ -102,7 +116,7 @@ const Canvas = ({ shapes }: { shapes: any }) => {
 
   const onCanvasPointerMove = (e: any) => {
     e.preventDefault();
-
+    updateMyPresence({ cursor: { x: e.clientX, y: e.clientY } });
     if (isDragging) {
       const shape: LiveObject<{
         x: number;
@@ -125,6 +139,7 @@ const Canvas = ({ shapes }: { shapes: any }) => {
         onPointerDown={(e) => setPresence({ selectedShape: null })}
         onPointerMove={onCanvasPointerMove}
         onPointerUp={onCanvasPointerUp}
+        onPointerLeave={() => updateMyPresence({ cursor: null })}
       >
         {Array.from(shapes, ([shapeId, shape]) => {
           const selectionColor =
@@ -143,6 +158,15 @@ const Canvas = ({ shapes }: { shapes: any }) => {
             />
           );
         })}
+        {others.map(({ connectionId, presence }) =>
+          presence.cursor ? (
+            <Cursor
+              key={connectionId}
+              x={(presence.cursor as any).x}
+              y={(presence.cursor as any).y}
+            />
+          ) : null
+        )}
       </div>
       <div className="toolbar">
         <button onClick={insertRectangle}>Rectangle</button>

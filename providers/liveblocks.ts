@@ -5,5 +5,11 @@ const client = createClient({
   publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_API_KEY ?? '',
 });
 
-export const { RoomProvider, useMap, useOthers, useMyPresence, useRoom } =
-  createRoomContext(client);
+export const {
+  RoomProvider,
+  useMap,
+  useOthers,
+  useMyPresence,
+  useRoom,
+  useUpdateMyPresence,
+} = createRoomContext(client);
