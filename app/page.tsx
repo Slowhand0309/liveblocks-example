@@ -1,7 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { useMap, useMyPresence, useOthers } from '../providers/liveblocks';
-
 const COLORS = ['#DC2626', '#D97706', '#059669', '#7C3AED', '#DB2777'];
 
 const getRandomInt = (max: number) => {
@@ -39,6 +39,7 @@ const Rectangle = ({
 };
 
 const Canvas = ({ shapes }: { shapes: any }) => {
+  const [isDragging, setIsDragging] = useState(false);
   const [{ selectedShape }, setPresence] = useMyPresence();
   const others = useOthers();
 
@@ -53,8 +54,9 @@ const Canvas = ({ shapes }: { shapes: any }) => {
   };
 
   const onShapePointerDown = (e: any, shapeId: string) => {
-    setPresence({ selectedShape: shapeId });
     e.stopPropagation();
+    setPresence({ selectedShape: shapeId });
+    setIsDragging(true);
   };
 
   const deleteRectangle = () => {
@@ -62,11 +64,36 @@ const Canvas = ({ shapes }: { shapes: any }) => {
     setPresence({ selectedShape: null });
   };
 
+  const onCanvasPointerUp = (e: any) => {
+    if (!isDragging) {
+      setPresence({ selectedShape: null });
+    }
+
+    setIsDragging(false);
+  };
+
+  const onCanvasPointerMove = (e: any) => {
+    e.preventDefault();
+
+    if (isDragging) {
+      const shape = shapes.get(selectedShape);
+      if (shape) {
+        shapes.set(selectedShape, {
+          ...shape,
+          x: e.clientX - 50,
+          y: e.clientY - 50,
+        });
+      }
+    }
+  };
+
   return (
     <>
       <div
         className="canvas"
         onPointerDown={(e) => setPresence({ selectedShape: null })}
+        onPointerMove={onCanvasPointerMove}
+        onPointerUp={onCanvasPointerUp}
       >
         {Array.from(shapes, ([shapeId, shape]) => {
           const selectionColor =
