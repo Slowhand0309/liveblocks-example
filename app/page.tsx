@@ -1,7 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { useMap, useMyPresence, useOthers } from '../providers/liveblocks';
+import { LiveObject } from '@liveblocks/client';
+import { useEffect, useState } from 'react';
+import {
+  useMap,
+  useMyPresence,
+  useOthers,
+  useRoom,
+} from '../providers/liveblocks';
 const COLORS = ['#DC2626', '#D97706', '#059669', '#7C3AED', '#DB2777'];
 
 const getRandomInt = (max: number) => {
@@ -23,7 +29,15 @@ const Rectangle = ({
   onShapePointerDown: (e: any, id: string) => void;
   selectionColor: string | undefined;
 }) => {
-  const { x, y, fill } = shape;
+  const room = useRoom();
+  const [{ x, y, fill }, setShapeData] = useState(shape.toObject());
+  useEffect(() => {
+    const onChange = () => {
+      setShapeData(shape.toObject());
+    };
+
+    return room.subscribe(shape, onChange);
+  }, [room, shape]);
 
   return (
     <div
@@ -45,12 +59,12 @@ const Canvas = ({ shapes }: { shapes: any }) => {
 
   const insertRectangle = () => {
     const shapeId = Date.now().toString();
-    const rectangle = {
+    const shape = new LiveObject({
       x: getRandomInt(300),
       y: getRandomInt(300),
       fill: getRandomColor(),
-    };
-    shapes.set(shapeId, rectangle);
+    });
+    shapes.set(shapeId, shape);
   };
 
   const onShapePointerDown = (e: any, shapeId: string) => {
@@ -76,10 +90,13 @@ const Canvas = ({ shapes }: { shapes: any }) => {
     e.preventDefault();
 
     if (isDragging) {
-      const shape = shapes.get(selectedShape);
+      const shape: LiveObject<{
+        x: number;
+        y: number;
+        fill: string;
+      }> = shapes.get(selectedShape);
       if (shape) {
-        shapes.set(selectedShape, {
-          ...shape,
+        shape.update({
           x: e.clientX - 50,
           y: e.clientY - 50,
         });

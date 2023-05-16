@@ -14,7 +14,7 @@ export default function RootLayout({
       <head></head>
       <body>
         <RoomProvider
-          id="react-whiteboard-app"
+          id="react-whiteboard-app2"
           initialPresence={{}}
           initialStorage={{
             shapes: new LiveMap(),
