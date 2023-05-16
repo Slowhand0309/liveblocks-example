@@ -30,7 +30,8 @@ const Rectangle = ({
   selectionColor: string | undefined;
 }) => {
   const room = useRoom();
-  const [{ x, y, fill }, setShapeData] = useState(shape.toObject());
+  const [{ x, y, fill, sub }, setShapeData] = useState(shape.toObject());
+  const [name, setName] = useState(sub.get('name'));
   useEffect(() => {
     const onChange = () => {
       setShapeData(shape.toObject());
@@ -39,6 +40,13 @@ const Rectangle = ({
     return room.subscribe(shape, onChange);
   }, [room, shape]);
 
+  useEffect(() => {
+    const onChange = () => {
+      setName(sub.get('name'));
+    };
+
+    return room.subscribe(sub, onChange);
+  }, []);
   return (
     <div
       className="rectangle"
@@ -48,7 +56,12 @@ const Rectangle = ({
         backgroundColor: fill ? fill : '#CCC',
         borderColor: selectionColor || 'transparent',
       }}
-    ></div>
+    >
+      <input
+        value={name}
+        onChange={(e) => sub.update({ name: e.target.value })}
+      />
+    </div>
   );
 };
 
@@ -63,6 +76,7 @@ const Canvas = ({ shapes }: { shapes: any }) => {
       x: getRandomInt(300),
       y: getRandomInt(300),
       fill: getRandomColor(),
+      sub: new LiveObject({ name: '' }),
     });
     shapes.set(shapeId, shape);
   };
@@ -97,7 +111,7 @@ const Canvas = ({ shapes }: { shapes: any }) => {
       }> = shapes.get(selectedShape);
       if (shape) {
         shape.update({
-          x: e.clientX - 50,
+          x: e.clientX - 100,
           y: e.clientY - 50,
         });
       }
