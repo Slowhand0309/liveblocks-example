@@ -1,6 +1,6 @@
 'use client';
 
-import { useMap } from '../providers/liveblocks';
+import { useMap, useMyPresence, useOthers } from '../providers/liveblocks';
 
 const COLORS = ['#DC2626', '#D97706', '#059669', '#7C3AED', '#DB2777'];
 
@@ -12,21 +12,36 @@ const getRandomColor = () => {
   return COLORS[getRandomInt(COLORS.length)];
 };
 
-const Rectangle = ({ shape }: { shape: any }) => {
+const Rectangle = ({
+  shape,
+  id,
+  onShapePointerDown,
+  selectionColor,
+}: {
+  shape: any;
+  id: string;
+  onShapePointerDown: (e: any, id: string) => void;
+  selectionColor: string | undefined;
+}) => {
   const { x, y, fill } = shape;
 
   return (
     <div
       className="rectangle"
+      onPointerDown={(e) => onShapePointerDown(e, id)}
       style={{
         transform: `translate(${x}px, ${y}px)`,
         backgroundColor: fill ? fill : '#CCC',
+        borderColor: selectionColor || 'transparent',
       }}
     ></div>
   );
 };
 
 const Canvas = ({ shapes }: { shapes: any }) => {
+  const [{ selectedShape }, setPresence] = useMyPresence();
+  const others = useOthers();
+
   const insertRectangle = () => {
     const shapeId = Date.now().toString();
     const rectangle = {
@@ -36,11 +51,34 @@ const Canvas = ({ shapes }: { shapes: any }) => {
     };
     shapes.set(shapeId, rectangle);
   };
+
+  const onShapePointerDown = (e: any, shapeId: string) => {
+    setPresence({ selectedShape: shapeId });
+    e.stopPropagation();
+  };
+
   return (
     <>
-      <div className="canvas">
+      <div
+        className="canvas"
+        onPointerDown={(e) => setPresence({ selectedShape: null })}
+      >
         {Array.from(shapes, ([shapeId, shape]) => {
-          return <Rectangle key={shapeId} shape={shape} />;
+          const selectionColor =
+            selectedShape === shapeId
+              ? 'blue'
+              : others.some((user) => user.presence?.selectedShape === shapeId)
+              ? 'green'
+              : undefined;
+          return (
+            <Rectangle
+              key={shapeId}
+              shape={shape}
+              id={shapeId}
+              onShapePointerDown={onShapePointerDown}
+              selectionColor={selectionColor}
+            />
+          );
         })}
       </div>
       <div className="toolbar">
