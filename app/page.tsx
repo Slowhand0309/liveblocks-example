@@ -57,6 +57,11 @@ const Canvas = ({ shapes }: { shapes: any }) => {
     e.stopPropagation();
   };
 
+  const deleteRectangle = () => {
+    shapes.delete(selectedShape);
+    setPresence({ selectedShape: null });
+  };
+
   return (
     <>
       <div
@@ -83,6 +88,9 @@ const Canvas = ({ shapes }: { shapes: any }) => {
       </div>
       <div className="toolbar">
         <button onClick={insertRectangle}>Rectangle</button>
+        <button onClick={deleteRectangle} disabled={selectedShape == null}>
+          Delete
+        </button>
       </div>
     </>
   );
