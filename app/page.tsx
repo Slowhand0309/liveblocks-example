@@ -70,19 +70,22 @@ const Cursor = ({ x, y }: { x: number; y: number }) => {
   return (
     <img
       style={{
+        width: '64px',
+        height: '64px',
         position: 'absolute',
         transform: `translate(${x}px, ${y}px)`,
       }}
-      src="https://liveblocks.io/images/cursor.svg"
+      src="vercel.svg"
     />
   );
 };
 
 const Canvas = ({ shapes }: { shapes: any }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [{ selectedShape }, setPresence] = useMyPresence();
+  const [myPresence, setPresence] = useMyPresence();
   const updateMyPresence = useUpdateMyPresence();
   const others = useOthers();
+  const selectedShape = !!myPresence ? myPresence.selectedShape : {};
 
   const insertRectangle = () => {
     const shapeId = Date.now().toString();
