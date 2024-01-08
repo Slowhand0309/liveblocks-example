@@ -65,17 +65,29 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@liveblocks/client@1.7.0", "@liveblocks/client@^1.2.1":
+"@liveblocks/client@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@liveblocks/client/-/client-1.7.0.tgz#0d3cacdad96f0103cde1ebb4fca55b8d3c4a2d7d"
   integrity sha512-BJnHDnp2GH+d7NuJJSRSZwSHLSd73BNS3ApiNInsatE56y5FSOx861kbbYKyD2Spv9vg3z9QZfBWMSrzTR5IeA==
   dependencies:
     "@liveblocks/core" "1.7.0"
 
+"@liveblocks/client@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@liveblocks/client/-/client-1.9.3.tgz#3bb980832bb7d03f07b8059e631ee3bb584007a0"
+  integrity sha512-lDsvdZfAser424aBWXGLlawwf2COGdkPkuga61AyOD6a7TZ9PSJhQDGadR2q34QRaWsVFgfVJqEVZg6EhdLSPg==
+  dependencies:
+    "@liveblocks/core" "1.9.3"
+
 "@liveblocks/core@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@liveblocks/core/-/core-1.7.0.tgz#a26f7f7ed142870ad3e51b0123b2beff2ed8e4d6"
   integrity sha512-JSEvFr4iQYAKnE0dH36VWNFW6KmWStP8XJtb711bSXevRxx/4ODN88kQkTNNVuUjpgAOM+ekKjbqEdHmd8JhKw==
+
+"@liveblocks/core@1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@liveblocks/core/-/core-1.9.3.tgz#41d71fcd1d776dd7b438de563c105aeb9eb7f67a"
+  integrity sha512-wNQx2gyQwNabCDfWhhbgn28pzaQ7+L3jVwqI3xqIfI1UX1BFUkHG6l5YS9efa+fj7D+hmLfn4eKOoSoOFhDx6Q==
 
 "@liveblocks/react@^1.7.0":
   version "1.7.0"
